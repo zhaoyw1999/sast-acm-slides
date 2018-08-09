@@ -1,0 +1,76 @@
+\documentclass[11pt]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{xeCJK, fontspec, xunicode, xltxtra} 
+\usepackage{amsmath} 
+\usepackage{amsfonts} 
+\usepackage{amssymb} 
+\usepackage{graphicx} 
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\useoutertheme{infolines}
+\usetheme{CambridgeUS}
+\usecolortheme{seagull} 
+\setCJKmainfont[BoldFont=STHeiti]{STKaiti} 
+\usefonttheme{serif} 
+
+\author[赵玉炜]{{\fontspec{Times New Roman}{NJUPT.SAST.ACM组}}\quad 赵玉炜} 
+\title{算法评价}
+\date{2018年7月} 
+\logo{\includegraphics[scale=0.1]{NJUPT-logo-2.png}} 
+
+\definecolor{Green}{RGB}{60,179,113}
+\definecolor{Orange}{RGB}{255,165,0}
+\definecolor{Moccasin}{RGB}{255,228,181}
+\lstset{
+	alsoletter={/},
+	basicstyle=\ttfamily,
+	breaklines=true,
+	keywordstyle={\bfseries\color{Green}},
+	frame=shadowbox,
+	frameround=tftt,
+	rulecolor={\color{Orange}},
+	rulesepcolor={\color{Orange}},
+	backgroundcolor={\color{Moccasin}},
+	morekeywords={let,for,from,to,step},
+	emph={},
+	emphstyle={\bfseries\color{red!80!black}},
+	tabsize=4,
+	numbers=right,
+	numberstyle={\bfseries\tiny\ttfamily},
+	numbersep=-0.6em,
+	commentstyle={\itshape\color{blue}}
+}
+
+
+\begin{document}
+
+
+\defverbatim[colored]\algoA{
+\begin{lstlisting}
+let a[1...100000], sum <- 0
+\end{lstlisting}
+}
+
+	\begin{frame}
+	\titlepage
+	\end{frame}
+
+	\section{算法评价}
+	\begin{frame}[c]
+	\frametitle{如何评价算法的优劣}
+	\onslide<1->
+	\begin{block}{\textbf{求和问题}}
+	输入一个$n$，求$\sum_{i=1}^{n}{i}$，数据范围$n \in [1, 10^8]$。
+	\end{block}
+	\onslide<2->
+	\textbf{算法A} \algoA
+
+
+	\end{frame}
+	
+
+
+
+\end{document} 
