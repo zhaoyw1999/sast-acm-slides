@@ -1,0 +1,245 @@
+\documentclass[11pt]{beamer}
+ 
+\usepackage{xeCJK}
+\usepackage{fontspec}
+\setCJKmainfont[BoldFont=Hei]{STKaiti}
+\usefonttheme{serif}
+\usepackage{xcolor}
+
+\useoutertheme{infolines}
+\usetheme{Szeged}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usecolortheme{beaver}
+ 
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+ 
+\author{赵玉炜}
+\title{搜索}
+%\setbeamercovered{transparent} 
+%\setbeamertemplate{navigation symbols}{} 
+ 
+\logo{\includegraphics[scale=0.1]{njupt.png}} 
+\institute[NJUPT.SAST]{软件研发中心，ACM组} 
+\date{}
+
+\begin{document}
+	\section{Begin}
+	\begin{frame}
+  \titlepage
+  \end{frame}
+
+  \section{导言}
+  \begin{frame}[c]
+  \frametitle{交个朋友}
+    \begin{block}{博客}
+    	www.cfzhao.com \\
+    	欢迎各位大佬Py友链。
+    \end{block}
+    \begin{block}{Github}
+    	https://github.com/zhaoyw1999
+    \end{block}
+  \end{frame}
+
+  \section{朴素的算法思想}
+  \begin{frame}[c]
+    \frametitle{问题引入}
+    \onslide<1->
+    \begin{block}{鸡兔同笼问题}
+      今有雉（鸡）兔同笼，上有三十五头，下有九十四足。问雉兔各几何。
+    \end{block}
+    \vspace{0.5cm}
+    \onslide<2->
+    朴素的算法思想：\textbf{枚举}。
+  \end{frame}
+
+  \section{从枚举到搜索}
+  \begin{frame}[c]
+    \frametitle{问题引入}
+    \onslide<1->
+    \begin{block}{迷宫（Openjudge - 1792）}
+      一天Extense在森林里探险的时候不小心走入了一个迷宫，迷宫可以看成是由$n \times n$的格点组成，每个格点只有$2$种状态，`.'和`\#'，前者表示可以通行后者表示不能通行。同时当Extense处在某个格点时，他只能移动到东南西北(或者说上下左右)四个方向之一的相邻格点上，Extense想要从点A走到点B，问在不走出迷宫的情况下能不能办到。如果起点或者终点有一个不能通行(为\#)，则看成无法办到。
+    \end{block}
+    \begin{block}{输入}
+      一个整数$n(1 \leq n \leq 100)$；\\
+      一个字符矩阵，包含`.'和`\#'两种字符组成；\\
+      四个整数$S_x,S_y,E_x,E_y$表示起点和终点。
+    \end{block}
+    \begin{block}{输出}
+      能办到输出“YES”，否则输出“NO”。
+    \end{block}
+  \end{frame}
+
+  \section{BFS}
+  \begin{frame}[c]
+  	\frametitle{分析问题}
+  	\begin{enumerate}
+  	  \onslide<1->
+  	  \item 枚举出所有的路径（从起点开始），为什么？\\
+  	  \onslide<2->
+  	  \item 枚举方法是什么？
+  	    \begin{itemize}
+  	      \onslide<3->
+  	      \item 如何做到有序？
+  	      \item 如何做到没有重复？
+  	    \end{itemize}
+    \end{enumerate}
+  \end{frame}
+
+  \begin{frame}[c]
+  	\frametitle{队列与宽度优先搜索（BFS）}
+  	\onslide<1->
+	  \begin{block}{队列}
+      一种先进先出（FIFO）的数据结构。
+    \end{block}
+    \onslide<2->
+    \begin{block}{状态}
+      这里可以指当前所在位置。
+    \end{block}
+    \onslide<3->
+    \begin{block}{搜索树}
+      用树的形式表示状态与状态之间的拓扑关系。
+    \end{block}
+    \onslide<4->
+    \begin{block}{宽度优先搜索}
+      逐层枚举搜索树上的每一个节点。
+    \end{block}
+  \end{frame}
+  
+  \begin{frame}[c]
+    \frametitle{搜索过程}
+    \begin{itemize}
+    	\item 开始状态入队，打访问标记
+    	\item 当队列不为空时，执行以下循环：
+    		\begin{itemize}
+    			\item 队首元素出队，存入临时变量
+    			\item 如果这个元素已经是目标状态，结束循环并记录答案
+    			\item 对这个元素进行状态拓展
+    			\item 判断拓展到的元素是否符合继续搜索的条件（没有被搜索过），如果符合，加入队列
+    		\end{itemize}
+    \end{itemize}
+  \end{frame}
+
+  \section{DFS}
+  \begin{frame}[c]
+  	\frametitle{栈与深度优先搜索（DFS）}
+  	\onslide<1->
+	  \begin{block}{栈}
+      一种先进后出（FILO）的数据结构。
+    \end{block}
+    \onslide<2->
+    \begin{block}{深度优先搜索}
+      每次都尝试向更深的节点走。 如果没有更深的节点了，就回到上一层的下一个节点。
+    \end{block}
+  \end{frame}
+
+  \begin{frame}[c]
+    \frametitle{搜索过程}
+    让我们用递归的思想思考这个过程。
+    \begin{itemize}
+			\item 我们正在搜索一个状态
+			\begin{itemize}
+				\item 为这个状态打访问标记
+				\item 如果是目标状态，记录答案并结束当前搜索
+				\item 拓展当前状态
+				\item 如果拓展到的状态可行，就搜索这个状态
+		  \end{itemize}
+		\end{itemize}
+		\begin{block}{思考}
+			深度优先搜索和栈有着怎样的关系？
+		\end{block}
+  \end{frame}
+
+  \section{复杂度分析}
+  \begin{frame}[c]
+  	\frametitle{搜索的复杂度}
+    搜索的复杂度等于搜索树中实际遍历的节点的个数。\\
+    关于算法分析的内容具体留在周五讨论课讨论。
+  \end{frame}
+
+  \section{小试牛刀}
+  \begin{frame}[c]
+  	\frametitle{例题}
+  	\begin{block}{算24（Openjudge 1789）}
+  		给出4个小于10个正整数，你可以使用加减乘除4种运算以及括号把这4个数连接起来得到一个表达式。现在的问题是，是否存在一种方式使得得到的表达式的结果等于24。这里加减乘除以及括号的运算结果和运算的优先级跟我们平常的定义一致（这里的除法定义是实数除法）。比如，对于5，5，5，1，我们知道5 * (5 – 1 / 5) = 24，因此可以得到24。又比如，对于1，1，4，2，我们怎么都不能得到24。
+  	\end{block}
+  	\begin{block}{输入}
+  		四个整数。
+  	\end{block}
+  	\begin{block}{输出}
+  	  如果能计算出24，输出``YES''，否则输出``NO''。
+  	\end{block}
+  \end{frame}
+  \begin{frame}[c]
+  	\frametitle{例题}
+  	\begin{block}{抓住那头牛（Openjudge 2971）}
+  		农夫知道一头牛的位置，想要抓住它。农夫和牛都位于数轴上，农夫起始位于点$n(0 \leq n \leq 100000)$，牛位于点$k(0 \leq k \leq 100000)$。农夫有两种移动方式：\\
+			1、从$x$移动到$x-1$或$x+1$，每次移动花费一分钟 \\
+			2、从$x$移动到$2\times x$，每次移动花费一分钟 \\
+			假设牛没有意识到农夫的行动，站在原地不动。农夫最少要花多少时间才能抓住牛？
+  	\end{block}
+  	\begin{block}{输入}
+  		两个整数$n$和$k$。
+  	\end{block}
+  	\begin{block}{输出}
+  	  一个整数，最小分钟数。
+  	\end{block}
+  \end{frame}
+
+  \section{后续学习}
+  \begin{frame}[c]
+  	\frametitle{搜索优化}
+  	\onslide<1->
+  	\begin{block}{记忆化搜索}
+  	  因为在搜索中，相同的传入值往往会带来相同的解，那我们就可以用数组来记忆。
+  	\end{block}
+  	\onslide<2->
+  	\begin{block}{最优性剪枝}
+  	  在搜索中导致运行慢的原因还有一种，就是在当前解已经比已有解差时仍然在搜索，那么我们只需要判断一下当前解是否已经差于已有解。
+  	\end{block}
+  	\onslide<3->
+  	\begin{block}{可行性剪枝}
+  	  仅当可行的时候搜索拓展的状态。
+  	\end{block}
+  \end{frame}
+  \begin{frame}[c]
+  	\frametitle{搜索优化}
+  	\onslide<1->
+  	\begin{block}{双向BFS}
+  	  从状态图上起点和终点同时开始进行宽度优先搜索，如果发现相遇了，那么可以认为是获得了可行解。
+  	\end{block}
+  	\onslide<2->
+  	\begin{block}{迭代加深}
+  	  迭代加深是一种每次限制搜索深度的深度优先搜索。
+  	\end{block}
+  \end{frame}
+  \begin{frame}[c]
+  	\frametitle{搜索进阶}
+  	\onslide<1->
+  	\begin{block}{A*}
+  	  利用估价函数优化搜索过程。
+  	\end{block}
+  	\onslide<2->
+  	\begin{block}{IDA*}
+  	  迭代加深的A*。
+  	\end{block}
+  \end{frame}
+
+  \section{End}
+  \begin{frame}
+  \titlepage
+  \end{frame}
+
+\end{document}
+
+
+
+
+
+
+
+

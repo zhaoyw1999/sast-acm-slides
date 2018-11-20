@@ -1,0 +1,10 @@
+\beamer@sectionintoc {1}{Begin}{1}{0}{1}
+\beamer@sectionintoc {2}{导言}{2}{0}{2}
+\beamer@sectionintoc {3}{朴素的算法思想}{3}{0}{3}
+\beamer@sectionintoc {4}{从枚举到搜索}{5}{0}{4}
+\beamer@sectionintoc {5}{BFS}{6}{0}{5}
+\beamer@sectionintoc {6}{DFS}{14}{0}{6}
+\beamer@sectionintoc {7}{复杂度分析}{17}{0}{7}
+\beamer@sectionintoc {8}{小试牛刀}{18}{0}{8}
+\beamer@sectionintoc {9}{后续学习}{20}{0}{9}
+\beamer@sectionintoc {10}{End}{27}{0}{10}
